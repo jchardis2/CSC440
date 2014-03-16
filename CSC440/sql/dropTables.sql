@@ -1,0 +1,16 @@
+DROP TABLE alert;
+DROP TABLE confraction;
+DROP TABLE diet;
+DROP TABLE exercise;
+DROP TABLE exercisetolerance;
+DROP TABLE healthprofessional;
+DROP TABLE mood;
+DROP TABLE oxygensat;
+DROP TABLE pain;
+DROP TABLE temperature;
+DROP TABLE weight;
+DROP TABLE ob_category;
+DROP TABLE observation;
+DROP TABLE patient_type;
+DROP TABLE patients;
+DROP TABLE types;
