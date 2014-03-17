@@ -2,24 +2,18 @@ package com.csc440.beans;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 public class ObservationBean {
 
 	private int id;
 	private int patientID;
-	private int type;
+	private int observationtypeid;
 	private Date obdate;
-	private Timestamp timestamp;
+	private Timestamp obtime;
 	private Timestamp recordtime;
-
-	public ObservationBean(int id, int patientID, int type, Date obdate,
-			Timestamp timestamp, Timestamp recordtime) {
-		this.setId(id);
-		this.setType(type);
-		this.setObdate(obdate);
-		this.setTimestamp(timestamp);
-		this.setRecordtime(recordtime);
-	}
+	private ObservationTypeBean observationTypeBean;
+	private ArrayList<ObservationInfoBean<?>> observationInfo = new ArrayList<>();
 
 	public ObservationBean() {
 	}
@@ -40,12 +34,12 @@ public class ObservationBean {
 		this.patientID = patientID;
 	}
 
-	public int getType() {
-		return type;
+	public int getObservationtypeid() {
+		return observationtypeid;
 	}
 
-	public void setType(int type) {
-		this.type = type;
+	public void setObservationtypeid(int observationtypeid) {
+		this.observationtypeid = observationtypeid;
 	}
 
 	public Date getObdate() {
@@ -56,12 +50,12 @@ public class ObservationBean {
 		this.obdate = obdate;
 	}
 
-	public Timestamp getTimestamp() {
-		return timestamp;
+	public Timestamp getObtime() {
+		return obtime;
 	}
 
-	public void setTimestamp(Timestamp timestamp) {
-		this.timestamp = timestamp;
+	public void setObtime(Timestamp obtime) {
+		this.obtime = obtime;
 	}
 
 	public Timestamp getRecordtime() {
@@ -70,6 +64,23 @@ public class ObservationBean {
 
 	public void setRecordtime(Timestamp recordtime) {
 		this.recordtime = recordtime;
+	}
+
+	public ObservationTypeBean getObservationTypeBean() {
+		return observationTypeBean;
+	}
+
+	public void setObservationTypeBean(ObservationTypeBean observationTypeBean) {
+		this.observationTypeBean = observationTypeBean;
+	}
+
+	public ArrayList<ObservationInfoBean<?>> getObservationInfo() {
+		return observationInfo;
+	}
+
+	public void setObservationInfo(
+			ArrayList<ObservationInfoBean<?>> observationInfo) {
+		this.observationInfo = observationInfo;
 	}
 
 }

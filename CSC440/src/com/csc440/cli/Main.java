@@ -18,9 +18,8 @@ public class Main {
 		while (true) {
 			userBean = login();
 			if (userBean instanceof PatientBean) {
-				PatientMain patientMain = new PatientMain(
-						(PatientBean) userBean, scanner);
-				patientMain.execute();
+				PatientMain.getInstance().init((PatientBean) userBean, scanner);
+				PatientMain.getInstance().execute();
 			} else if (userBean instanceof HealthProfessionalBean) {
 
 			}

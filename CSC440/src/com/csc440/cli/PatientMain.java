@@ -6,14 +6,26 @@ import com.csc440.beans.PatientBean;
 import com.csc440.cli.patient.actions.EnterDataAction;
 import com.csc440.cli.patient.actions.IPatientAction;
 import com.csc440.cli.patient.actions.PatientAction;
+import com.csc440.cli.patient.actions.ViewDataAction;
 
 public class PatientMain extends PatientAction implements IPatientAction {
 	private Scanner scanner;
 	private PatientBean patientBean;
+	private static PatientMain patientMain;
 
-	public PatientMain(PatientBean patientBean, Scanner scanner) {
+	public static PatientMain getInstance() {
+		if (patientMain == null) {
+			patientMain = new PatientMain();
+		}
+		return patientMain;
+	}
+
+	public void init(PatientBean patientBean, Scanner scanner) {
 		this.patientBean = patientBean;
 		this.scanner = scanner;
+	}
+
+	private PatientMain() {
 	}
 
 	public void printOptions() {
@@ -41,8 +53,7 @@ public class PatientMain extends PatientAction implements IPatientAction {
 		case 1:
 			return new EnterDataAction();
 		case 2:
-
-			return null;
+			return new ViewDataAction();
 		}
 		return null;
 	}
@@ -50,6 +61,22 @@ public class PatientMain extends PatientAction implements IPatientAction {
 	@Override
 	public void exit() {
 		shouldRun = false;
+	}
+
+	public Scanner getScanner() {
+		return scanner;
+	}
+
+	public void setScanner(Scanner scanner) {
+		this.scanner = scanner;
+	}
+
+	public PatientBean getPatientBean() {
+		return patientBean;
+	}
+
+	public void setPatientBean(PatientBean patientBean) {
+		this.patientBean = patientBean;
 	}
 
 }

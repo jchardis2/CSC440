@@ -22,7 +22,7 @@ public class HealthProfessionalLoader implements
 
 	public void loadCommon(ResultSet rs, HealthProfessionalBean pb)
 			throws SQLException {
-		pb.setId(rs.getInt("id"));
+		pb.setId(rs.getInt("healthprofessionalid"));
 		pb.setUsername(rs.getString("username"));
 		pb.setPassword(rs.getString("password"));
 		pb.setType(rs.getString("type"));

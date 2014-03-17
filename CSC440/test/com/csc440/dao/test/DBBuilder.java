@@ -38,7 +38,7 @@ public class DBBuilder {
 
 	public static void rebuildAll() throws FileNotFoundException, IOException, SQLException, NamingException {
 		DBBuilder dbBuilder = new DBBuilder(TestDAOFactory.getTestInstance());
-		dbBuilder.dropTables();
+//		dbBuilder.dropTables();
 		dbBuilder.createTables();
 		System.out.println("Operation Completed");
 	}
@@ -51,6 +51,12 @@ public class DBBuilder {
 
 	public void createTables() throws FileNotFoundException, IOException, SQLException, NamingException {
 		List<String> queries = SQLFileCache.getInstance().getQueries("sql/createTables.sql");
+		executeSQL(queries);
+		System.out.println("Tables created.");
+	}
+
+	public void createSequences() throws FileNotFoundException, IOException, SQLException, NamingException {
+		List<String> queries = SQLFileCache.getInstance().getQueries("sql/createSequences.sql");
 		executeSQL(queries);
 		System.out.println("Tables created.");
 	}

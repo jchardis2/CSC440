@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class PatientBean extends UserBean {
 
-	private long id;
+	private int id;
 	private String username;
 	private String password;
 	private Date dob;
@@ -13,7 +13,7 @@ public class PatientBean extends UserBean {
 	private boolean sex;
 	private boolean healthfriend;
 
-	public PatientBean(long id, String username, String password, Date dob,
+	public PatientBean(int id, String username, String password, Date dob,
 			String name, String address, boolean sex, boolean healthfriend) {
 		super();
 		this.id = id;
@@ -29,11 +29,11 @@ public class PatientBean extends UserBean {
 	public PatientBean() {
 	}
 
-	public void setID(long id) {
+	public void setID(int id) {
 		this.id = id;
 	}
 
-	public long getID() {
+	public int getID() {
 		return this.id;
 	}
 

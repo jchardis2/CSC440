@@ -9,30 +9,32 @@ import java.util.List;
 import javax.naming.NamingException;
 
 import com.csc440.beans.ObservationBean;
+import com.csc440.beans.ObservationTypeBean;
 import com.csc440.dao.DAOFactory;
 import com.csc440.dao.DBUtil;
 import com.csc440.exceptions.DBException;
-import com.csc440.loaders.ObservationLoader;
+import com.csc440.loaders.ObservationTypeLoader;
 
-public class ObservationDAO {
+public class ObservationTypeDAO {
 	private DAOFactory factory;
-	private ObservationLoader observationLoader;
+	private ObservationTypeLoader observationTypeLoader;
 
-	public ObservationDAO(DAOFactory factory) {
+	public ObservationTypeDAO(DAOFactory factory) {
 		this.factory = factory;
-		this.observationLoader = new ObservationLoader();
+		this.observationTypeLoader = new ObservationTypeLoader();
 	}
 
-	public ObservationBean getObservationByID(long id) throws DBException {
+	public ObservationTypeBean getPatientByID(long id) throws DBException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		try {
 			conn = factory.getConnection();
-			ps = conn.prepareStatement("SELECT * FROM observation, observationtype WHERE observation.obid = ? AND observation.observationtypeid = observationtype.obtypeid");
+			ps = conn
+					.prepareStatement("SELECT * FROM observationtype WHERE obypteid = ?");
 			ps.setLong(1, id);
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
-				ObservationBean bean = observationLoader.loadSingle(rs);
+				ObservationTypeBean bean = observationTypeLoader.loadSingle(rs);
 				rs.close();
 				ps.close();
 				return bean;
@@ -49,36 +51,34 @@ public class ObservationDAO {
 		}
 	}
 
-	public List<ObservationBean> getObservationsByPatientID(int patientid) throws DBException {
+	public List<ObservationTypeBean> getObservationsTypes() throws DBException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		try {
 			conn = factory.getConnection();
-			String selectSQL = "SELECT * FROM OBSERVATION, OBSERVATIONTYPE WHERE OBSERVATION.OBSERVATIONTYPEID = OBSERVATIONTYPE.OBTYPEID AND OBSERVATION.PATIENTID = ?";
+			String selectSQL = "Select * from observationtype";
 			ps = conn.prepareStatement(selectSQL);
-			ps.setInt(1, patientid);
 			ResultSet rs = ps.executeQuery();
-			List<ObservationBean> bean = observationLoader.loadList(rs);
+			List<ObservationTypeBean> bean = observationTypeLoader.loadList(rs);
 			rs.close();
 			ps.close();
 			return bean;
 		} catch (SQLException | NamingException e) {
-
 			throw new DBException(e);
 		} finally {
 			DBUtil.closeConnection(conn, ps);
 		}
 	}
-
-	public Integer insertObservationBean(ObservationBean observationBean) throws DBException {
+	
+	public Integer insertObservationBean(ObservationTypeBean observationTypeBean) throws DBException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		try {
 			conn = factory.getConnection();
-			String selectSQL = "INSERT INTO OBSERVATION (OBID, PATIENTID, OBSERVATIONTYPEID, OBDATE, OBTIME, RECOREDTIME) " + "VALUES (?, ?, ?, ?, ?, ?)";
+			String selectSQL = "INSERT INTO OBSERVATIONTYPE (OBTYPEID, NAME, OBTYPE) " + "VALUES (?, ?, ?)";
 			ps = conn.prepareStatement(selectSQL);
 
-			ps = observationLoader.loadParameters(ps, observationBean);
+			ps = observationTypeLoader.loadParameters(ps, observationTypeBean);
 			ps.executeUpdate();
 			Integer rs = getLastID(conn);
 			ps.close();
@@ -92,9 +92,10 @@ public class ObservationDAO {
 	}
 
 	public int getLastID(Connection conn) throws SQLException {
-		PreparedStatement ps = conn.prepareStatement("SELECT observation_seq.CURRVAL FROM dual");
+		PreparedStatement ps = conn.prepareStatement("SELECT observationtype_seq.CURRVAL FROM dual");
 		ResultSet rs = ps.executeQuery();
 		rs.next();
 		return rs.getInt(1);
 	}
+
 }

@@ -19,7 +19,7 @@ public class PatientLoader implements BeanLoader<PatientBean> {
 	}
 
 	public void loadCommon(ResultSet rs, PatientBean pb) throws SQLException {
-		pb.setID(rs.getLong("id"));
+		pb.setID(rs.getInt("patientid"));
 		pb.setUsername(rs.getString("username"));
 		pb.setPassword(rs.getString("password"));
 		pb.setName(rs.getString("name"));

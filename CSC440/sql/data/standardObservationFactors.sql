@@ -1,0 +1,13 @@
+INSERT INTO "OBSERVATIONFACTORS" (obfactorid, OBSERVATIONTYPEID, name, factortype) VALUES ('1', '1', 'Consumed', 'string');
+INSERT INTO "OBSERVATIONFACTORS" (obfactorid, OBSERVATIONTYPEID, name, factortype) VALUES ('2', '1', 'Amount', 'int');
+INSERT INTO "OBSERVATIONFACTORS" (obfactorid, OBSERVATIONTYPEID, name, factortype) VALUES ('3', '2', 'Amount', 'int');
+INSERT INTO "OBSERVATIONFACTORS" (obfactorid, OBSERVATIONTYPEID, name, factortype) VALUES ('4', '3', 'Kind', 'string');
+INSERT INTO "OBSERVATIONFACTORS" (obfactorid, OBSERVATIONTYPEID, name, factortype) VALUES ('5', '3', 'Duration', 'int');
+INSERT INTO "OBSERVATIONFACTORS" (obfactorid, OBSERVATIONTYPEID, name, factortype) VALUES ('6', '4', 'Systolic', 'int');
+INSERT INTO "OBSERVATIONFACTORS" (obfactorid, OBSERVATIONTYPEID, name, factortype) VALUES ('7', '4', 'Diastolic', 'int');
+INSERT INTO "OBSERVATIONFACTORS" (obfactorid, OBSERVATIONTYPEID, name, factortype) VALUES ('8', '5', 'Steps', 'int');
+INSERT INTO "OBSERVATIONFACTORS" (obfactorid, OBSERVATIONTYPEID, name, factortype) VALUES ('9', '6', 'Amount', 'int');
+INSERT INTO "OBSERVATIONFACTORS" (obfactorid, OBSERVATIONTYPEID, name, factortype) VALUES ('10', '7', 'Scale', 'int');
+INSERT INTO "OBSERVATIONFACTORS" (obfactorid, OBSERVATIONTYPEID, name, factortype) VALUES ('11', '8', 'Value', 'string');
+INSERT INTO "OBSERVATIONFACTORS" (obfactorid, OBSERVATIONTYPEID, name, factortype) VALUES ('12', '9', 'Frequecy', 'int');
+INSERT INTO "OBSERVATIONFACTORS" (obfactorid, OBSERVATIONTYPEID, name, factortype) VALUES ('13', '10', 'Amount', 'double');

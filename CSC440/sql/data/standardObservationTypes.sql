@@ -1,0 +1,10 @@
+INSERT INTO "OBSERVATIONTYPE" (obtypeid, NAME, OBTYPE) VALUES ('1', 'Diet', 'Behavioral');
+INSERT INTO "OBSERVATIONTYPE" (obtypeid, NAME, OBTYPE) VALUES ('2', 'Weight', 'Behavioral');
+INSERT INTO "OBSERVATIONTYPE" (obtypeid, NAME, OBTYPE) VALUES ('3', 'Exercise', 'Behavioral');
+INSERT INTO "OBSERVATIONTYPE" (obtypeid, NAME, OBTYPE) VALUES ('4', 'Blood Pressure', 'Physiological');
+INSERT INTO "OBSERVATIONTYPE" (obtypeid, NAME, OBTYPE) VALUES ('5', 'Exercise Tolerance', 'Physiological');
+INSERT INTO "OBSERVATIONTYPE" (obtypeid, NAME, OBTYPE) VALUES ('6', 'Oxygen Saturation', 'Physiological');
+INSERT INTO "OBSERVATIONTYPE" (obtypeid, NAME, OBTYPE) VALUES ('7', 'Pain', 'Physiological');
+INSERT INTO "OBSERVATIONTYPE" (obtypeid, NAME, OBTYPE) VALUES ('8', 'Mood', 'Psychological');
+INSERT INTO "OBSERVATIONTYPE" (obtypeid, NAME, OBTYPE) VALUES ('9', 'Contraction', 'Physiological');
+INSERT INTO "OBSERVATIONTYPE" (obtypeid, NAME, OBTYPE) VALUES ('10', 'Temperature', 'Physiological');
