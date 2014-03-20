@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 
-import org.eclipse.jdt.core.compiler.InvalidInputException;
-
 import com.csc440.beans.ObservationBean;
 import com.csc440.beans.ObservationFactorBean;
 import com.csc440.beans.ObservationInfoBean;
@@ -47,7 +45,8 @@ public class EnterDataAction extends PatientAction implements IPatientAction {
 	}
 
 	public int executeOption(int actionID) {
-		ObservationTypeDAO observationTypeDAO = new ObservationTypeDAO(DAOFactory.getProductionInstance());
+		ObservationTypeDAO observationTypeDAO = new ObservationTypeDAO(
+				DAOFactory.getProductionInstance());
 		switch (actionID) {
 		case 0:
 			exit();
@@ -55,42 +54,58 @@ public class EnterDataAction extends PatientAction implements IPatientAction {
 		case 1:
 
 			try {
-				List<ObservationTypeBean> observationTypeBeans = observationTypeDAO.getObservationsTypes();
+				List<ObservationTypeBean> observationTypeBeans = observationTypeDAO
+						.getObservationsTypes();
 				for (int i = 0; i < observationTypeBeans.size(); i++) {
-					System.out.println("[" + i + "] " + observationTypeBeans.get(i).getName());
+					System.out.println("[" + i + "] "
+							+ observationTypeBeans.get(i).getName());
 				}
 				int obTypeSelected = Main.getScanner().nextInt();
 
-				ObservationFactorDAO observationFactorDAO = new ObservationFactorDAO(DAOFactory.getProductionInstance());
-				List<ObservationFactorBean> observationFactorBeans = observationFactorDAO.getObservationsTypes(observationTypeBeans.get(obTypeSelected).getId());
-				System.out.println("Please enter the appropriate information: ");
+				ObservationFactorDAO observationFactorDAO = new ObservationFactorDAO(
+						DAOFactory.getProductionInstance());
+				List<ObservationFactorBean> observationFactorBeans = observationFactorDAO
+						.getObservationsTypes(observationTypeBeans.get(
+								obTypeSelected).getId());
+				System.out
+						.println("Please enter the appropriate information: ");
 
 				// Setup the observation bean
 				ObservationBean ob = new ObservationBean();
-				ob.setPatientID(PatientMain.getInstance().getPatientBean().getID());
-				int obTypeID = ObservationUtil.observationTypes.getType(observationTypeBeans.get(obTypeSelected).getObtype());
+				ob.setPatientID(PatientMain.getInstance().getPatientBean()
+						.getID());
+				int obTypeID = ObservationUtil.observationTypes
+						.getType(observationTypeBeans.get(obTypeSelected)
+								.getObtype());
 				ob.setObservationtypeid(obTypeID);
 				ob.setObdate(new Date(System.currentTimeMillis()));
 				ob.setObtime(new Timestamp(System.currentTimeMillis()));
 				ob.setRecordtime(new Timestamp(System.currentTimeMillis()));
-				ob.setObservationTypeBean(observationTypeBeans.get(obTypeSelected));
+				ob.setObservationTypeBean(observationTypeBeans
+						.get(obTypeSelected));
 
 				// Get the observation factors
 				getObservationFactors(observationFactorBeans, ob);
 
-				ObservationDAO observationDAO = new ObservationDAO(DAOFactory.getProductionInstance());
+				ObservationDAO observationDAO = new ObservationDAO(
+						DAOFactory.getProductionInstance());
 				int obid = observationDAO.insertObservationBean(ob);
 				ob.setId(obid);
 
-				for (ObservationInfoBean<?> observationInfoBean : ob.getObservationInfo()) {
+				for (ObservationInfoBean<?> observationInfoBean : ob
+						.getObservationInfo()) {
 					observationInfoBean.setObid(obid);
-					ObservationInfoDAO infoDAO = new ObservationInfoDAO(DAOFactory.getProductionInstance());
+					ObservationInfoDAO infoDAO = new ObservationInfoDAO(
+							DAOFactory.getProductionInstance());
 					infoDAO.insertObservationInfoBean(observationInfoBean);
-					if (observationInfoBean.getInfo().getClass().getName().equals("java.lang.Integer")) {
+					if (observationInfoBean.getInfo().getClass().getName()
+							.equals("java.lang.Integer")) {
 						infoDAO.insertObservationIntInfoBean((ObservationInfoBean<Integer>) observationInfoBean);
-					} else if (observationInfoBean.getInfo().getClass().getName().equals("java.lang.String")) {
+					} else if (observationInfoBean.getInfo().getClass()
+							.getName().equals("java.lang.String")) {
 						infoDAO.insertObservationStringInfoBean((ObservationInfoBean<String>) observationInfoBean);
-					} else if (observationInfoBean.getInfo().getClass().getName().equals("java.lang.Double")) {
+					} else if (observationInfoBean.getInfo().getClass()
+							.getName().equals("java.lang.Double")) {
 						infoDAO.insertObservationDoubleInfoBean((ObservationInfoBean<Double>) observationInfoBean);
 					}
 				}
@@ -112,9 +127,11 @@ public class EnterDataAction extends PatientAction implements IPatientAction {
 				System.out.println("Physiological [1]");
 				System.out.println("Psychological [2]");
 				int type = Main.getScanner().nextInt();
-				observationTypeBean.setObtype(ObservationUtil.observationTypes.getType(type));
+				observationTypeBean.setObtype(ObservationUtil.observationTypes
+						.getType(type));
 
-				int obtypeid = observationTypeDAO.insertObservationBean(observationTypeBean);
+				int obtypeid = observationTypeDAO
+						.insertObservationBean(observationTypeBean);
 				observationTypeBean.setId(obtypeid);
 
 				// Get the factors for this observation type
@@ -134,17 +151,21 @@ public class EnterDataAction extends PatientAction implements IPatientAction {
 						System.out.println("Integer [1]");
 						System.out.println("Double/Real Number [2]");
 						int factorstype = Main.getScanner().nextInt();
-						ObservationFactorBean factorBean = new ObservationFactorBean(0, observationTypeBean.getId(), factorName, ObservationUtil.factorTypes.getType(factorstype));
+						ObservationFactorBean factorBean = new ObservationFactorBean(
+								0, observationTypeBean.getId(), factorName,
+								ObservationUtil.factorTypes
+										.getType(factorstype));
 						factorBeans.add(factorBean);
 
-						ObservationFactorDAO factorDAO = new ObservationFactorDAO(DAOFactory.getProductionInstance());
+						ObservationFactorDAO factorDAO = new ObservationFactorDAO(
+								DAOFactory.getProductionInstance());
 						factorDAO.insertObservationFactorBean(factorBean);
 					}
 					System.out.println("------------------------------");
 				} else {
-					throw new InvalidInputException("Invalid Number");
+					throw new InputMismatchException("Invalid Number");
 				}
-			} catch (InvalidInputException | InputMismatchException e) {
+			} catch (InputMismatchException e) {
 				System.out.println("Invalid Input");
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
@@ -154,11 +175,16 @@ public class EnterDataAction extends PatientAction implements IPatientAction {
 		return -1;
 	}
 
-	private void getObservationFactors(List<ObservationFactorBean> observationFactorBeans, ObservationBean ob) {
+	private void getObservationFactors(
+			List<ObservationFactorBean> observationFactorBeans,
+			ObservationBean ob) {
 		for (ObservationFactorBean observationFactorBean : observationFactorBeans) {
-			System.out.print(observationFactorBean.getName() + "[" + observationFactorBean.getFactorType() + "]: ");
-			ObservationInfoBeanFactory beanFactory = new ObservationInfoBeanFactory(Main.getScanner());
-			ObservationInfoBean<?> oib = beanFactory.readObservation(observationFactorBean.getFactorType());
+			System.out.print(observationFactorBean.getName() + "["
+					+ observationFactorBean.getFactorType() + "]: ");
+			ObservationInfoBeanFactory beanFactory = new ObservationInfoBeanFactory(
+					Main.getScanner());
+			ObservationInfoBean<?> oib = beanFactory
+					.readObservation(observationFactorBean.getFactorType());
 			oib.setName(observationFactorBean.getName());
 			ob.getObservationInfo().add(oib);
 			System.out.println();
